@@ -10,6 +10,8 @@ const App = () => {
   const [hobby, setHobby] = useState([]);
   const [error, setError] = useState({});
   const [editId, setEditId] = useState(null);
+  const [searchData, setSearchData] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   const navigate = useNavigate();
 
@@ -43,6 +45,17 @@ const App = () => {
 
     setError(error);
     return Object.keys(error).length === 0;
+  };
+
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchText(value);
+
+    const filtered = list.filter(item =>
+      item.name.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setSearchData(filtered);
   };
 
   const handleSubmit = (e) => {
@@ -79,6 +92,7 @@ const App = () => {
     setList(newList);
     localStorage.setItem("employeeList", JSON.stringify(newList));
   };
+
   const handleEdit = (id) => {
     const data = list.find(item => item.id === id);
     setEmployee(data);
@@ -89,7 +103,7 @@ const App = () => {
 
   return (
     <>
-      <Header />
+      <Header onChange={handleSearch} />
       <Routes>
         <Route path="/" element={null} />
         <Route
@@ -108,7 +122,7 @@ const App = () => {
           path="/view_employees"
           element={
             <View_employees
-              list={list}
+              list={searchText ? searchData : list}
               handleDelete={handleDelete}
               handleEdit={handleEdit}
             />

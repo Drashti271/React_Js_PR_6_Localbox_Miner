@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({onChange}) => {
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -35,7 +35,7 @@ const Header = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  Dropdown
+                  Employee
                 </Link>
                 <ul className="dropdown-menu">
                   <li>
@@ -55,6 +55,7 @@ const Header = () => {
               <input
                 className="form-control me-2"
                 type="search"
+                onChange={onChange}
                 placeholder="Search"
                 aria-label="Search"
               />
